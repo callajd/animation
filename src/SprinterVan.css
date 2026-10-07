@@ -1,0 +1,162 @@
+[data-sprinter-van] {
+  --van-pupil-color: #fff;
+  --van-smoke-color: #000;
+  --van-ease: cubic-bezier(.2,.8,.2,1);
+  display: inline-block;
+  line-height: 0;
+}
+
+[data-sprinter-van] > [data-svg-host],
+[data-sprinter-van] svg { display: block; width: 100%; height: auto; }
+[data-sprinter-van] svg { overflow: visible; }
+
+[data-sprinter-van] #van-base,
+[data-sprinter-van] #expression-layer {
+  transform-box: view-box;
+  transform-origin: 50% 82%;
+}
+
+/* Only the pupils move. Both sockets keep the exact original lens contour. */
+[data-sprinter-van] .headlight-socket { fill: #000; }
+[data-sprinter-van] .headlight-pupil { fill: var(--van-pupil-color); }
+[data-sprinter-van] .eye-gaze {
+  transform: translate(var(--van-gaze-x, 0px), var(--van-gaze-y, 0px));
+}
+[data-sprinter-van] .eye-shape,
+[data-sprinter-van] .eye-blink {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+[data-sprinter-van] .eye-shape,
+[data-sprinter-van] .eye-expression-offset {
+  transition: transform 420ms var(--van-ease);
+}
+[data-sprinter-van] .headlight-pupil { transition: opacity 180ms ease, fill 220ms linear; }
+[data-sprinter-van] .eye-open { opacity: 1; }
+[data-sprinter-van] .eye-smile { opacity: 0; }
+
+/* Nested gaze, glance, expression and blink transforms compose independently. */
+[data-sprinter-van][data-animate="true"] .eye-blink { animation: van-eye-blink 6.2s ease-in-out infinite; }
+[data-sprinter-van][data-animate="true"] #headlight-right .eye-blink { animation-delay: 35ms; }
+[data-sprinter-van][data-animate="true"] .eye-glance { animation: van-eye-glance 14.5s var(--van-ease) infinite; }
+
+/* Happy / success: little smiling crescents instead of a headlight glow. */
+[data-sprinter-van][data-expression="happy"] .eye-open,
+[data-sprinter-van][data-expression="success"] .eye-open { opacity: 0; }
+[data-sprinter-van][data-expression="happy"] .eye-smile,
+[data-sprinter-van][data-expression="success"] .eye-smile { opacity: 1; }
+[data-sprinter-van][data-expression="happy"] .eye-shape,
+[data-sprinter-van][data-expression="success"] .eye-shape { transform: scale(1.1); }
+[data-sprinter-van][data-expression="happy"] .eye-expression-offset,
+[data-sprinter-van][data-expression="success"] .eye-expression-offset { transform: translateY(-2px); }
+
+/* Thinking: look up to one side, with a questioning asymmetry. */
+[data-sprinter-van][data-expression="thinking"] .eye-expression-offset { transform: translate(4px, -6px); }
+[data-sprinter-van][data-expression="thinking"] #headlight-left .eye-shape { transform: scale(.85, .7) rotate(-8deg); }
+[data-sprinter-van][data-expression="thinking"] #headlight-right .eye-shape { transform: scale(.9, 1.02) rotate(5deg); }
+[data-sprinter-van][data-animate="true"][data-expression="thinking"] .eye-glance { animation: van-eye-think 7s var(--van-ease) infinite; }
+
+/* Working: both pupils scan together, like following a line of text. */
+[data-sprinter-van][data-expression="working"] .eye-shape { transform: scale(.9, .85); }
+[data-sprinter-van][data-animate="true"][data-expression="working"] .eye-glance { animation: van-eye-read 3.8s var(--van-ease) infinite; }
+
+/* Excited: wide-eyed, a quick glance, and the original suspension bounce. */
+[data-sprinter-van][data-expression="excited"] .eye-shape { transform: scale(1.2, 1.08); }
+[data-sprinter-van][data-animate="true"][data-expression="excited"] .eye-glance { animation-duration: 6.5s; }
+[data-sprinter-van][data-animate="true"][data-expression="excited"] .eye-blink { animation-duration: 3.7s; }
+
+/* Concerned: small inward tilts, without painting lids over the artwork. */
+[data-sprinter-van][data-expression="concerned"] #headlight-left .eye-shape { transform: rotate(-16deg) scale(.9, .68); }
+[data-sprinter-van][data-expression="concerned"] #headlight-right .eye-shape { transform: rotate(16deg) scale(.9, .68); }
+[data-sprinter-van][data-expression="concerned"] .eye-expression-offset { transform: translateY(3px); }
+[data-sprinter-van][data-animate="true"][data-expression="concerned"] .eye-glance { animation-duration: 19s; }
+
+/* Sleepy: the pupils settle into two quiet, nearly closed dashes. */
+[data-sprinter-van][data-expression="sleepy"] .eye-shape { transform: scale(1.12, .12); }
+[data-sprinter-van][data-expression="sleepy"] .eye-expression-offset { transform: translateY(5px); }
+[data-sprinter-van][data-expression="sleepy"] .eye-blink,
+[data-sprinter-van][data-expression="sleepy"] .eye-glance { animation: none; }
+
+@keyframes van-eye-blink {
+  0%, 43%, 46%, 79%, 82%, 100% { transform: scaleY(1); }
+  44.4%, 80.4% { transform: scaleY(.055); }
+}
+@keyframes van-eye-glance {
+  0%, 15%, 44%, 65%, 100% { transform: translate(0, 0); }
+  19%, 32% { transform: translate(5px, -2px); }
+  49%, 58% { transform: translate(-4px, 2px); }
+  72%, 82% { transform: translate(2px, -3px); }
+}
+@keyframes van-eye-think {
+  0%, 30%, 100% { transform: translate(0, 0); }
+  40%, 65% { transform: translate(-3px, 2px); }
+  78%, 88% { transform: translate(1px, -2px); }
+}
+@keyframes van-eye-read {
+  0%, 12% { transform: translate(-5px, -1px); }
+  65%, 74% { transform: translate(5px, -1px); }
+  83%, 90% { transform: translate(-5px, 2px); }
+  100% { transform: translate(-5px, -1px); }
+}
+
+/* Original exhaust and body motion are retained. */
+[data-sprinter-van] .smoke-puff {
+  fill: var(--van-smoke-color) !important;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+[data-sprinter-van] [data-exhaust-eraser] { fill: #fff; }
+[data-sprinter-van][data-animate="true"] #van-base,
+[data-sprinter-van][data-animate="true"] #expression-layer { animation: van-idle-body 4.8s ease-in-out infinite; }
+[data-sprinter-van][data-animate="true"] .smoke-puff { animation: van-smoke 2.8s ease-out infinite; }
+[data-sprinter-van][data-animate="true"] #exhaust-puff-2 { animation-delay: .75s; }
+[data-sprinter-van][data-animate="true"] #exhaust-puff-3 { animation-delay: 1.5s; }
+[data-sprinter-van][data-animate="true"][data-expression="thinking"] .smoke-puff { animation-duration: 4.2s; }
+[data-sprinter-van][data-animate="true"][data-expression="working"] .smoke-puff { animation-duration: 1.75s; }
+[data-sprinter-van][data-animate="true"][data-expression="excited"] #van-base,
+[data-sprinter-van][data-animate="true"][data-expression="excited"] #expression-layer { animation: van-excited-body .72s var(--van-ease) infinite; }
+[data-sprinter-van][data-animate="true"][data-expression="excited"] .smoke-puff { animation-duration: 1.15s; }
+[data-sprinter-van][data-animate="true"][data-expression="success"] #van-base,
+[data-sprinter-van][data-animate="true"][data-expression="success"] #expression-layer { animation: van-success-hop .9s var(--van-ease) 1, van-idle-body 4.8s ease-in-out .9s infinite; }
+[data-sprinter-van][data-animate="true"][data-expression="success"] .smoke-puff { animation-duration: 1.4s; }
+[data-sprinter-van][data-animate="true"][data-expression="concerned"] #van-base,
+[data-sprinter-van][data-animate="true"][data-expression="concerned"] #expression-layer { animation: van-concerned-body 3.1s ease-in-out infinite; }
+[data-sprinter-van][data-animate="true"][data-expression="concerned"] .smoke-puff { animation-duration: 3.6s; }
+[data-sprinter-van][data-animate="true"][data-expression="sleepy"] #van-base,
+[data-sprinter-van][data-animate="true"][data-expression="sleepy"] #expression-layer { animation: van-sleep-body 6s ease-in-out infinite; }
+[data-sprinter-van][data-animate="true"][data-expression="sleepy"] .smoke-puff { animation-duration: 5.2s; }
+
+@keyframes van-idle-body {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.5px); }
+}
+@keyframes van-smoke {
+  0% { opacity: 0; transform: translate(0, 4px) scale(.68); }
+  18% { opacity: .72; }
+  62% { opacity: .34; }
+  100% { opacity: 0; transform: translate(34px, -28px) scale(1.16); }
+}
+@keyframes van-excited-body {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  45% { transform: translateY(-7px) rotate(-.35deg); }
+  65% { transform: translateY(-2px) rotate(.2deg); }
+}
+@keyframes van-success-hop {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  35% { transform: translateY(-9px) scaleY(1.01); }
+  63% { transform: translateY(1px) scaleY(.992); }
+}
+@keyframes van-concerned-body {
+  0%, 100% { transform: rotate(0); }
+  50% { transform: rotate(-.28deg); }
+}
+@keyframes van-sleep-body {
+  0%, 100% { transform: translateY(1px) rotate(.1deg); }
+  50% { transform: translateY(3px) rotate(.22deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-sprinter-van] *,
+  [data-sprinter-van] *::before,
+  [data-sprinter-van] *::after { animation: none !important; transition: none !important; }
+}
