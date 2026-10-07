@@ -66,6 +66,9 @@ function prepareSvg(svgText: string, label: string | null): string {
     throw new Error("SprinterVan: source is not an SVG document.");
   }
 
+  // Keep the accessible aria-label without SVG titles that show hover tooltips.
+  svg.querySelectorAll("title").forEach((title) => title.remove());
+
   // Let the React wrapper control sizing.
   svg.removeAttribute("width");
   svg.removeAttribute("height");
