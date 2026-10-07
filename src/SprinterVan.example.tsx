@@ -35,7 +35,7 @@ const MOODS: Record<SprinterVanExpression, {
   excited: { title: "Excited", detail: "Let's go!", description: "Wide-eyed pupils, quick glances, and an energetic bounce. Adventure is calling.", icon: Sparkles },
   success: { title: "Success", detail: "Nailed it", description: "Smiling eyes and a celebratory hop. Replay it for another little victory.", icon: CircleCheck },
   concerned: { title: "Concerned", detail: "Something's up", description: "The pupils tilt inward with a worried look and the van leans gently. A little reassurance goes a long way.", icon: TriangleAlert },
-  sleepy: { title: "Sleepy", detail: "Taking it slow", description: "The pupils settle into two sleepy dashes, with a slow sway and sparse exhaust. Even vans need a rest.", icon: Moon },
+  sleepy: { title: "Sleepy", detail: "Taking it slow", description: "The pupils settle into two sleepy dashes, with a slow sway and no exhaust. Even vans need a rest.", icon: Moon },
 };
 
 export function SprinterVanExample() {

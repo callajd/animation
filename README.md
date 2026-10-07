@@ -21,7 +21,7 @@ Open **http://localhost:5173/**. This is a single static page; it does not use a
 - **Pupils / Exhaust:** customize their colors; the headlamp sockets stay black.
 - **Reset to defaults:** restore idle, animation enabled, and the original colors.
 
-The pupils blink, glance, change shape with the selected expression, and follow your pointer with damped springs from Motion. Each black socket and pupil clip uses the actual lens contour extracted from the base SVG, rather than an approximate ellipse. The original eyebrows/lashes and exhaust animation are retained. Idle shows no exhaust; the other expressions keep their exhaust effects.
+The pupils blink, glance, change shape with the selected expression, and follow your pointer with damped springs from Motion. Each black socket and pupil clip uses the actual lens contour extracted from the base SVG, rather than an approximate ellipse. The original eyebrows/lashes and exhaust animation are retained. Idle and Sleepy show no exhaust; the other expressions keep their exhaust effects.
 
 The animation respects the browser's `prefers-reduced-motion` setting, including disabling pointer-following.
 

@@ -108,10 +108,12 @@
 [data-sprinter-van] [data-exhaust-eraser] { fill: #fff; }
 /* Keep the eraser visible to cover the plume baked into the base artwork. */
 [data-sprinter-van][data-expression="idle"] #exhaust-base,
-[data-sprinter-van][data-expression="idle"] #exhaust-puffs { display: none; }
+[data-sprinter-van][data-expression="idle"] #exhaust-puffs,
+[data-sprinter-van][data-expression="sleepy"] #exhaust-base,
+[data-sprinter-van][data-expression="sleepy"] #exhaust-puffs { display: none; }
 [data-sprinter-van][data-animate="true"] #van-base,
 [data-sprinter-van][data-animate="true"] #expression-layer { animation: van-idle-body 4.8s ease-in-out infinite; }
-[data-sprinter-van][data-animate="true"]:not([data-expression="idle"]) .smoke-puff { animation: van-smoke 2.8s ease-out infinite; }
+[data-sprinter-van][data-animate="true"]:not([data-expression="idle"]):not([data-expression="sleepy"]) .smoke-puff { animation: van-smoke 2.8s ease-out infinite; }
 [data-sprinter-van][data-animate="true"] #exhaust-puff-2 { animation-delay: .75s; }
 [data-sprinter-van][data-animate="true"] #exhaust-puff-3 { animation-delay: 1.5s; }
 [data-sprinter-van][data-animate="true"][data-expression="thinking"] .smoke-puff { animation-duration: 4.2s; }
@@ -127,7 +129,6 @@
 [data-sprinter-van][data-animate="true"][data-expression="concerned"] .smoke-puff { animation-duration: 3.6s; }
 [data-sprinter-van][data-animate="true"][data-expression="sleepy"] #van-base,
 [data-sprinter-van][data-animate="true"][data-expression="sleepy"] #expression-layer { animation: van-sleep-body 6s ease-in-out infinite; }
-[data-sprinter-van][data-animate="true"][data-expression="sleepy"] .smoke-puff { animation-duration: 5.2s; }
 
 @keyframes van-idle-body {
   0%, 100% { transform: translateY(0); }
